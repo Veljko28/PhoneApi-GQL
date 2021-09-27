@@ -1,6 +1,5 @@
 import { GraphQLSchema } from 'graphql';
-import { makeExecutableSchema } from '@graphql-tools/schema'
-import { mergeSchemas } from '@graphql-tools/schema';
+import { mergeSchemas, makeExecutableSchema } from '@graphql-tools/schema';
 import {importSchema} from 'graphql-import';
 
 import * as fs from 'fs';
