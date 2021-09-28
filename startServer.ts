@@ -22,7 +22,7 @@ const startServer = async () => {
   
   server.applyMiddleware({app});
   
-  app.listen({cors, port: 4000}, () => console.log(`Server listening on http://localhost:4000${server.graphqlPath}`));
+  app.listen({cors, port: 5000}, () => console.log(`Server listening on http://localhost:4000${server.graphqlPath}`));
 }
 
 export default startServer;

@@ -3,13 +3,13 @@ import startServer from "../startServer";
 import 'regenerator-runtime/runtime';
 import mongoose from "mongoose";
 
-// beforeAll( async () => {
-//   await startServer();
-// }) 
+beforeAll( async () => {
+    process.env.TEST_SERVER = 'true';
+}) 
 
-// afterAll(() => {
-//   mongoose.connection.close();
-// })
+afterAll(() => {
+  mongoose.connection.close();
+})
 
 describe("testing if jest works", () => {
 

@@ -3,9 +3,10 @@ import mongoose from 'mongoose';
 import { Phone } from "../models/Phone";
 import { v4 as uuidv4 } from 'uuid';
 
-beforeAll( async () => {
-  await startServer();
-}) 
+
+beforeAll(async () => {
+  process.env.TEST_SERVER = 'true';
+})
 
 const testPhone = {
   Id: uuidv4(),
@@ -31,7 +32,6 @@ describe("Testing Phones", () => {
   })
 
   test("Removing Added Phone", async () => {
-
     await Phone.remove({Id: testPhone.Id});
 
     const found = await Phone.find({Id: testPhone.Id});
