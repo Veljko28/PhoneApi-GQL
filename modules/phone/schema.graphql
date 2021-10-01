@@ -1,0 +1,21 @@
+type Query {
+    get_phone: Phone
+}
+
+type Mutation {
+    add_phone: Boolean,
+    edit_phone: Boolean
+}
+
+type Phone {
+    Id: String,
+    Name: String,
+    Image: String,
+    Description: String,
+    DateCreated: Date,
+    Seller: String,
+    Category: String,
+    Brand: String,
+    Price: Number,
+    Status: String
+}
