@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
 export const Bid = mongoose.model("Bid",new Schema({
-    Id: String,
     Name: String,
     Image: String,
     Description: String,

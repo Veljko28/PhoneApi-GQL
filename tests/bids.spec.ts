@@ -8,8 +8,23 @@ beforeAll(async () => {
   process.env.TEST_SERVER = 'true';
 })
 
-const testBid = {
-  Id: uuidv4(),
+interface TsBid {
+  _id: {type: String, default: null}
+  Name: String,
+  Image: String,
+  Description: String,
+  DateCreated: Date,
+  Seller: String,
+  Category: String,
+  Brand: String,
+  Price: Number,
+  Status: String,
+  DateEnds: Date
+}
+
+
+let testBid = {
+  _id: null,
   Name: "Test Bid",
   Image: "",
   Description: "The Description of the testing bid",
@@ -26,16 +41,17 @@ describe("Testing Bids", () => {
   test("Adding Bid and finding it", async () => {
       const bid = new Bid(testBid);
       await bid.save();
+      testBid = bid as any;
 
-      const found = await Bid.find({Id: testBid.Id});
+      const found = await Bid.find({_id: testBid._id});
 
       expect(found).toBeTruthy();
   })
 
   test("Removing Added Bid", async () => {
-    await Bid.remove({Id: testBid.Id});
+    await Bid.remove({_id: testBid._id});
 
-    const found = await Bid.find({Id: testBid.Id});
+    const found = await Bid.find({_id: testBid._id});
 
     expect(found).not.toBe(testBid);
 
