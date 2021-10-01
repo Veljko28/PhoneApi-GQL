@@ -8,8 +8,21 @@ beforeAll(async () => {
   process.env.TEST_SERVER = 'true';
 })
 
-const testPhone = {
-  Id: uuidv4(),
+interface TsPhone {
+    _id: {type: String, default: null},
+    Name: String,
+    Image: String,
+    Description: String,
+    DateCreated: Number,
+    Seller: String,
+    Category: String,
+    Brand: String,
+    Price: Number,
+    Status: String
+}
+
+let testPhone: TsPhone = {
+  _id: null,
   Name: "Test Phone",
   Image: "",
   Description: "The Description of the testing phone",
@@ -25,16 +38,17 @@ describe("Testing Phones", () => {
   test("Adding Phone and finding it", async () => {
       const phone = new Phone(testPhone);
       await phone.save();
+      testPhone = phone as any;
 
-      const found = await Phone.find({Id: testPhone.Id});
+      const found = await Phone.find({_id: phone._id});
 
       expect(found).toBeTruthy();
   })
 
   test("Removing Added Phone", async () => {
-    await Phone.remove({Id: testPhone.Id});
+    await Phone.remove({_id: testPhone._id});
 
-    const found = await Phone.find({Id: testPhone.Id});
+    const found = await Phone.find({_id: testPhone._id});
 
     expect(found).not.toBe(testPhone);
 
