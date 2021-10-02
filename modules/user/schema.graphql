@@ -1,20 +1,37 @@
 type Query {
-    getUser: User
+  getUser(id: String!): User
+  getAll: [User]
 }
 
 type Mutation {
-    login: Boolean,
-    register: Boolean
+  register(registerForm: RegisterForm!): Boolean
+  login(info: UserInfo!): TokenResponse
+}
+
+type TokenResponse {
+  accessToken: String
+}
+
+input RegisterForm {
+  userName: String!
+  email: String!
+  password: String!
+  confirm_password: String!
+}
+
+input UserInfo {
+  email: String!
+  password: String!
 }
 
 type User {
-    Email: String,
-    UserName: String,
-    Password: String,
-    Description: String,
-    Rating: Number,
-    PhoneNumber: String,
-    Phones_sold: Number,
-    EmailConfirmed: Boolean,
-    LoyalityPoints: Number
+  Email: String!
+  UserName: String!
+  Password: String!
+  Description: String!
+  Rating: Int!
+  PhoneNumber: String!
+  Phones_sold: Int!
+  EmailConfirmed: Boolean!
+  LoyalityPoints: Int!
 }
