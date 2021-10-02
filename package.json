@@ -6,25 +6,32 @@
   "scripts": {
     "start": "nodemon --exec ts-node index.ts",
     "test": "jest",
-    "ci": "start-server-and-test start http://localhost:5000 test"
+    "ci": "start-server-and-test start 'http-get://localhost:4000/graphql?query={ __schema { queryType { name } } }' test"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@babel/preset-typescript": "^7.15.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/graphql-resolvers": "^0.3.1",
+    "@types/jsonwebtoken": "^8.5.5",
     "@types/uuid": "^8.3.1",
     "apollo-server-express": "^3.3.0",
     "babel-jest": "^27.2.2",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "graphql": "^15.6.0",
     "graphql-import": "^0.7.1",
+    "graphql-resolvers": "^0.4.2",
     "graphql-tools": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.7",
     "nodemon": "^2.0.13",
     "start-server-and-test": "^1.14.0",
     "ts-node": "^10.2.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.15.6",
