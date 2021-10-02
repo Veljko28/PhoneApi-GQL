@@ -1,3 +1,3 @@
 import startServer from "./startServer";
 
-startServer();
+startServer().catch(err => console.log(err));
