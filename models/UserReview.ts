@@ -5,6 +5,6 @@ export const UserReview = mongoose.model("UserReview", new Schema({
   BuyerId: String,
   SellerId: String,
   PhoneId: String,
-  DateCreated: Date,
+  DateCreated: Number,
   Message: String
 }));
