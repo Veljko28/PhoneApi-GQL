@@ -1,35 +1,35 @@
-import { v4 } from "uuid"
-import { BidHistory } from "../models/BidHistory"
+// import { v4 } from "uuid"
+// import { BidHistory } from "../models/BidHistory"
 
-describe("Testing bid histories", () => {
+// describe("Testing bid histories", () => {
 
-  const history = {
-    Id: v4(),
-    Bid_Id: v4(),
-    UserName: "Testing User",
-    Amount: 100
-  }
+//   const history = {
+//     Id: v4(),
+//     Bid_Id: v4(),
+//     UserName: "Testing User",
+//     Amount: 100
+//   }
 
-  test("Adding bid history", async () => {
-     const bidHistory = new BidHistory(history);
+//   test("Adding bid history", async () => {
+//      const bidHistory = new BidHistory(history);
 
-     await bidHistory.save();
+//      await bidHistory.save();
 
-     expect((bidHistory as any).Id).toEqual(history.Id);
-  })
+//      expect((bidHistory as any).Id).toEqual(history.Id);
+//   })
 
-   test("Finding bid history", async () => {
-    const found = await BidHistory.find({Id: history.Id});
+//    test("Finding bid history", async () => {
+//     const found = await BidHistory.find({Id: history.Id});
 
-    expect(found).toBeTruthy();
-    expect(found).toEqual(history);
-  })
+//     expect(found).toBeTruthy();
+//     expect(found).toEqual(history);
+//   })
 
-  test("Removing bid history", async () => {
-    await BidHistory.remove(history);
+//   test("Removing bid history", async () => {
+//     await BidHistory.remove(history);
 
-    const found = await BidHistory.find({Id: history.Id});
+//     const found = await BidHistory.find({Id: history.Id});
 
-    expect(found).toBeFalsy();
-  })
-})
+//     expect(found).toBeFalsy();
+//   })
+// })

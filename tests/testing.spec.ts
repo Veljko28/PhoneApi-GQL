@@ -7,10 +7,6 @@ beforeAll( async () => {
     process.env.TEST_SERVER = 'true';
 }) 
 
-afterAll(() => {
-  mongoose.connection.close();
-})
-
 describe("testing if jest works", () => {
 
   test("first test should pass", async () => {
@@ -18,6 +14,5 @@ describe("testing if jest works", () => {
     const res = await Phone.find();
     console.log(res);
     expect(2+2).toEqual(4);
-    await mongoose.connection.close();
   })
 })
