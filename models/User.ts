@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 export const User = mongoose.model("User",new Schema({
+    Id: String,
     Email: String,
     UserName: String,
     Password: String,
