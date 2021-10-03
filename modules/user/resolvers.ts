@@ -2,6 +2,7 @@ import { User } from '../../models/User';
 import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
 import { CreateAccessToken } from '../../auth/CreateAccessToken';
+import { v4 } from 'uuid';
 
 interface RegisterForm {
   userName: string,
@@ -21,7 +22,7 @@ export const resolvers = {
   Query: {
     getUser:  async (_: any, args: {id: string}) => {
       const {id} = args;
-      const user = await User.find({_id: id});
+      const user = await User.find({where: {_id: id}});
 
       return user;
     },
@@ -46,6 +47,7 @@ export const resolvers = {
       const hashedPassword = bcrypt.hashSync(registerForm.password, 10);
 
       const userSchema = {
+        Id: v4(),
         Email: registerForm.email,
         UserName: registerForm.userName,
         Password: hashedPassword,
@@ -93,8 +95,21 @@ export const resolvers = {
             })
 
       return {
-        accessToken: CreateAccessToken(user.id, '15m')
+        accessToken: CreateAccessToken(user.id, '15m'),
+        userId: user.id
       };            
+    },
+
+    delete: async (_:any, args: {id: string}) => {
+        const {id} = args;
+
+        try { 
+          await User.deleteOne({id});
+          return true;
+        }
+        catch {
+          return false;
+        }
     }
 
   }
