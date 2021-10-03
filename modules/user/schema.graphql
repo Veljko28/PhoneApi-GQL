@@ -6,10 +6,12 @@ type Query {
 type Mutation {
   register(registerForm: RegisterForm!): Boolean
   login(info: UserInfo!): TokenResponse
+  delete(id: String): Boolean
 }
 
 type TokenResponse {
   accessToken: String
+  userId: String
 }
 
 input RegisterForm {
@@ -25,6 +27,7 @@ input UserInfo {
 }
 
 type User {
+  Id: String!
   Email: String!
   UserName: String!
   Password: String!
