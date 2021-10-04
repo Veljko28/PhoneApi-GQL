@@ -21,6 +21,12 @@ let deleteMutation = `
     delete(id: "")
   }`;
 
+let findUserQuery = `
+  {
+  getUser(id: ""){
+    UserName
+  }
+}`
 
 beforeAll( async () => {
   await startServer();
@@ -59,7 +65,22 @@ describe("Testing User Methods", () => {
           delete(id: "${userId}")
         }`;
 
+        findUserQuery = `
+        Query {
+          getUser(id: "${userId}"){
+            UserName
+          }
+        }
+        `
+
       expect(loginResponse.data.login).not.toBeNull();
+  })
+
+  test("Find the added user", async () => {
+    const addedUser = await graphqlTestCall(findUserQuery);
+
+    console.log(addedUser);
+    expect(addedUser).toBeTruthy();
   })
 
   test("Delete the added user", async () => {
