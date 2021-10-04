@@ -22,11 +22,18 @@ export const resolvers = {
   Query: {
     getUser:  async (_: any, args: {id: string}) => {
       const {id} = args;
-      const user = await User.find({where: {_id: id}});
+      const user: any = await User.find({Id: id});
+      console.log(user);
 
-      return user;
+      return {
+        UserName: user.UserName,
+        Email: user.Email,
+        Description: user.Description,
+        Rating: user.Rating,
+        EmailConfirmed: user.EmailConfirmed
+      };
     },
-    getAll: async () => {
+    getAllUsers: async () => {
       const allUsers = await User.find();
 
       return allUsers;
