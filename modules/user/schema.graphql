@@ -1,6 +1,6 @@
 type Query {
   getUser(id: String!): User
-  getAll: [User]
+  getAllUsers: [User]
 }
 
 type Mutation {
@@ -21,6 +21,14 @@ input RegisterForm {
   confirm_password: String!
 }
 
+type UserResponse {
+  UserName: String
+  Email: String
+  Description: String
+  Rating: Int
+  EmailConfirmed: Boolean
+}
+
 input UserInfo {
   email: String!
   password: String!
@@ -28,7 +36,7 @@ input UserInfo {
 
 type User {
   Id: String!
-  Email: String!
+  Email: String
   UserName: String!
   Password: String!
   Description: String!
