@@ -1,45 +1,54 @@
-import { Phone } from '../../models/Phone';
+import { v4 } from "uuid";
+import { Phone } from "../../models/Phone";
 
-interface TsPhone {
-    _id: {type: String, default: null},
-    Name: String,
-    Image: String,
-    Description: String,
-    DateCreated: Date,
-    Seller: String,
-    Category: String,
-    Brand: String,
-    Price: Number,
-    Status: String
+interface AddPhoneModel {
+  Name: String
+  Image: String
+  Description: String
+  Seller: String
+  Category: String
+  Brand: String
+  Price: Number
 }
 
-const reslovers = {
-    Query: {
-        get_phone: async (_: any, {Id}: {Id: string}) => {
-            const phone = await Phone.find({Id});
-            return phone;
-        },
+export const resolvers = {
+  Query: {
+    getPhone: async (_: any, args: {id: string}) => {
+        const {id} = args;
+        const phone = await Phone.find({Id: id});
+        return phone;
     },
-    Mutation: {
-        add_phone: async (_: any, phone: TsPhone) => {
-            const newPhone = new Phone(phone);
-            await newPhone.save();
-    
-            const added = await Phone.find({_id: phone._id});
-            
-            if (added === null || added === undefined){
-                return false;
-            }
-    
-            return true;
-        },
-        edit_phone: async (_: any, updated: TsPhone) => {
-            await Phone.findOneAndUpdate({_id: updated._id}, updated);
-    
-            const phone = await Phone.find({_id: updated._id});
-    
-            return (phone as any) === updated;
-        }
-
+    getAllPhones: async () => {
+      const phones = await Phone.find();
+      return phones;
     }
+  },
+  Mutation: {
+    addPhone: async (_: any, args: {model: AddPhoneModel}) => {
+      const {model} = args;
+      const fullModel = {
+        Id: v4(),
+        Status: 0,
+        DateCreated: Date.now(),
+        ...model,
+      }
+      const phone = new Phone(fullModel);
+       try {
+        await phone.save();
+        return true;
+      }
+      catch(err) {return false}
+    },
+    deletePhone: async (_:any, args: {id: string}) => {
+       const {id} = args;
+
+        try { 
+          await Phone.deleteOne({id});
+          return true;
+        }
+        catch {
+          return false;
+        }
+    }
+  }
 }
