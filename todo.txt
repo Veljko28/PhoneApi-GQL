@@ -1,9 +1,12 @@
 create all the tests
 create all the models
+
 create phone reducer actions
-create phone gql schema
+create phone gql schema 
+create phone tests
 
 fix the rest of the tests with _id
 
-set up jwt access tokens 
-user tests
+set up jwt access tokens ✅
+user tests ✅ 
+user find by id fix

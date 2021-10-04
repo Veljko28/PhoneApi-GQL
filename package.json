@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec ts-node index.ts",
     "test": "jest --detectOpenHandles",
-    "ci": "start-server-and-test start 'http-get://localhost:4000/graphql?query={ __schema { queryType { name } } }' test"
+    "ci": "start-server-and-test start 'http-get://localhost:80/graphql?query={ __schema { queryType { name } } }' test"
   },
   "author": "",
   "license": "ISC",
