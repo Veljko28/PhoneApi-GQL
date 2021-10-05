@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-export const Bid = mongoose.model("Bid",new Schema({
+export interface IBid extends mongoose.Document {
     Name: String,
     Image: String,
     Description: String,
@@ -9,6 +9,19 @@ export const Bid = mongoose.model("Bid",new Schema({
     Category: String,
     Brand: String,
     Price: Number,
-    Status: String,
+    DateEnds: Date 
+} 
+
+export const Bid = mongoose.model("Bid",new Schema({
+    Id: String,
+    Name: String,
+    Image: String,
+    Description: String,
+    DateCreated: Date,
+    Seller: String,
+    Category: String,
+    Brand: String,
+    Price: Number,
+    Status: Number,
     DateEnds: Date
 }));
