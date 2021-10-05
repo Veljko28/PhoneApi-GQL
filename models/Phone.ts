@@ -4,7 +4,7 @@ export const Phone = mongoose.model("Phone",new Schema({
     Id: String,
     Name: String,
     Image: String,
-    Description: String,
+    Description: String,  
     DateCreated: Number,
     Seller: String,
     Category: String,
