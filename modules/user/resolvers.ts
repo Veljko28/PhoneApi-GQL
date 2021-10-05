@@ -1,4 +1,4 @@
-import { User } from '../../models/User';
+import { User, IUser } from '../../models/User';
 import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
 import { CreateAccessToken } from '../../auth/CreateAccessToken';
@@ -11,6 +11,8 @@ interface RegisterForm {
   confirm_password: string
 }
 
+type userType = IUser;
+
 const yupSchema = yup.object().shape( {
     email: yup.string().min(10).max(255).email(),
     userName: yup.string().min(5).max(100),
@@ -20,11 +22,11 @@ const yupSchema = yup.object().shape( {
 
 export const resolvers = {
   Query: {
-    getUser:  async (_: any, args: {id: string}) => {
+    getUser: async (_: any, args: {id: string}) => {
       const {id} = args;
-      const user: any = await User.find({Id: id});
-      console.log(user);
 
+      const user: any = await User.findOne({Id: id});
+      
       return {
         UserName: user.UserName,
         Email: user.Email,
@@ -107,7 +109,7 @@ export const resolvers = {
       };            
     },
 
-    delete: async (_:any, args: {id: string}) => {
+    deleteUser: async (_:any, args: {id: string}) => {
         const {id} = args;
 
         try { 
@@ -117,7 +119,19 @@ export const resolvers = {
         catch {
           return false;
         }
-    }
+    },
+
+
+    updateUser: async (_: any, args: {user: userType}) => {
+      const {user} = args;
+      
+      await User.updateOne({id: user.Id}, user).catch(err => {
+        console.log(err);
+        return false;
+      })
+
+      return true;
+    } 
 
   }
 }
