@@ -1,0 +1,34 @@
+type Query {
+  getBid(id: String): Bid
+  getAllBids: [Bid]
+}
+
+type Mutation {
+  addBid(model: inpBid): Boolean
+}
+
+input inpBid {
+  Name: String
+  Image: String
+  Description: String
+  Seller: String
+  Category: String
+  Brand: String
+  Price: Int
+  Status: String
+  DateEnds: Float
+}
+
+type Bid {
+  Id: String
+  Name: String
+  Image: String
+  Description: String
+  DateCreated: Float
+  Seller: String
+  Category: String
+  Brand: String
+  Price: Int
+  Status: String
+  DateEnds: Float
+}
