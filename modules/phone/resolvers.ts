@@ -15,7 +15,7 @@ export const resolvers = {
   Query: {
     getPhone: async (_: any, args: {id: string}) => {
         const {id} = args;
-        const phone = await Phone.find({Id: id});
+        const phone = await Phone.findOne({Id: id});
         return phone;
     },
     getAllPhones: async () => {
