@@ -1,6 +1,12 @@
 import { v4 } from 'uuid';
 import { Bid, IBid } from '../../models/Bid';
 
+type id = {
+  Id: Number
+}
+
+type updateBid = IBid & id
+
 export const resolvers = {
   Query: {
     getBid: async (_: any, args: {id: string}) => {
@@ -15,7 +21,9 @@ export const resolvers = {
   Mutation: {
     addBid: async (_: any, args: {model: IBid}) => {
       const {model} = args;
-      const added = new Bid({...model, DateCreated: Date.now(), Id: v4(), Status: 0 });
+      const added = new Bid({...model, DateCreated: Date.now(), 
+        Id: model.Id !== null ? model.Id : v4(),
+        Status: 0 });
 
       try {
         await added.save();
@@ -25,6 +33,29 @@ export const resolvers = {
         console.log(err);
         return false;
       }
-    }
+    },
+
+    updateBid: async (_: any, args: {bid: updateBid}) => {
+      const {bid} = args;
+      
+      await Bid.updateOne({id: bid.Id}, bid).catch(err => {
+        console.log(err);
+        return false;
+      })
+
+      return true;
+    },
+
+    deleteBid: async (_:any, args: {id: string}) => {
+        const {id} = args;
+
+        try { 
+          await Bid.deleteOne({id});
+          return true;
+        }
+        catch {
+          return false;
+        }
+    },
   }
 } 

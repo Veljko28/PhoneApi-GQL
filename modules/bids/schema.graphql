@@ -5,12 +5,29 @@ type Query {
 
 type Mutation {
   addBid(model: inpBid): Boolean
+  updateBid(bid: updateBid): Boolean
+  deleteBid(id: String): Boolean
 }
 
 input inpBid {
+  Id: String
   Name: String
   Image: String
   Description: String
+  Seller: String
+  Category: String
+  Brand: String
+  Price: Int
+  Status: String
+  DateEnds: Float
+}
+
+input updateBid {
+  Id: String
+  Name: String
+  Image: String
+  Description: String
+  DateCreated: Float
   Seller: String
   Category: String
   Brand: String
