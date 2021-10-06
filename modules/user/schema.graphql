@@ -1,12 +1,13 @@
 type Query {
-  getUser(id: String!): User
+  getUser(id: String!): UserResponse
   getAllUsers: [User]
 }
 
 type Mutation {
   register(registerForm: RegisterForm!): Boolean
   login(info: UserInfo!): TokenResponse
-  delete(id: String): Boolean
+  deleteUser(id: String): Boolean
+  updateUser(user: updateUser): Boolean
 }
 
 type TokenResponse {
@@ -27,11 +28,26 @@ type UserResponse {
   Description: String
   Rating: Int
   EmailConfirmed: Boolean
+  PhoneNumber: String
+  Phones_sold: Int
+  LoyalityPoints: Int
 }
 
 input UserInfo {
   email: String!
   password: String!
+}
+
+input updateUser {
+  Id: String!
+  Email: String
+  UserName: String!
+  Description: String!
+  Rating: Int!
+  PhoneNumber: String
+  Phones_sold: Int
+  EmailConfirmed: Boolean!
+  LoyalityPoints: Int
 }
 
 type User {

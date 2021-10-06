@@ -23,7 +23,7 @@ type Phone {
   Name: String
   Image: String
   Description: String
-  DateCreated: Int
+  DateCreated: Float
   Seller: String
   Category: String
   Brand: String
