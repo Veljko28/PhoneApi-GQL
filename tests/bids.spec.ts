@@ -1,59 +1,73 @@
-// import startServer from "../startServer"
-// import mongoose from 'mongoose';
-// import { v4 as uuidv4 } from 'uuid';
-// import { Bid } from "../models/Bid";
+import startServer from "../startServer";
+import { graphqlTestCall } from "./assets/graphqlTestCall";
+import mongoose from 'mongoose';
+
+const addMutation = `
+mutation($addBidModel: inpBid) {
+  addBid(model: $addBidModel)
+}`;
+
+beforeAll( async () => {
+  await startServer();
+})
+
+afterAll( async () => {
+  await mongoose.connection.close();
+})
+
+describe("Testing Bids", () => {
+    test("Adding a bid", async () => {
+
+       const bidModel = {
+        Id: '1',
+        Name: "Testing bid",
+        Description: "test desc",
+        Image: "",
+        Seller: "neko_tamo",
+        Price: 200,
+        Category: "Test",
+        Brand: "test",
+        DateEnds: Date.now() + 50000
+       }
+
+        const response = await graphqlTestCall(addMutation, {addBidModel: bidModel});
+
+        expect(response).toEqual({data: {addBid: true}});
+  })
+
+  test("Finding a bid", async () => {
+    const allBids = await graphqlTestCall(`
+      {
+        getAllBids {
+          Id
+        }
+      }
+    `);
+    const bids = allBids.data.getAllBids;
+
+    expect(bids.length).toBeGreaterThan(0);
 
 
-// beforeAll(async () => {
-//   process.env.TEST_SERVER = 'true';
-// })
+    const bid = await graphqlTestCall(`
+    {
+      getBid(id: "1"){
+        Name
+      }
+    }`);
 
-// interface TsBid {
-//   _id: {type: String, default: null}
-//   Name: String,
-//   Image: String,
-//   Description: String,
-//   DateCreated: Number,
-//   Seller: String,
-//   Category: String,
-//   Brand: String,
-//   Price: Number,
-//   Status: String,
-//   DateEnds: Number
-// }
+    const bidObj = bid.data.getBid;
+
+    expect(bidObj.Name).toBeTruthy();
+  })
 
 
-// let testBid = {
-//   _id: null,
-//   Name: "Test Bid",
-//   Image: "",
-//   Description: "The Description of the testing bid",
-//   DateCreated: Date.now(),
-//   Seller: "Admin",
-//   Category: "Testing",
-//   Brand: "Test",
-//   Price: 100,
-//   Status: "Running",
-//   DateEnds: Date.now() + (30 * 60000)
-// }
+  test("Deleting the added bid", async () => {
+      const del = await graphqlTestCall(`
+      mutation {
+        deleteBid(id: "1")
+      }`);
 
-// describe("Testing Bids", () => {
-//   test("Adding Bid and finding it", async () => {
-//       const bid = new Bid(testBid);
-//       await bid.save();
-//       testBid = bid as any;
+      expect(del).toEqual({data: { deleteBid: true }});
+  })
 
-//       const found = await Bid.find({_id: testBid._id});
-
-//       expect(found).toBeTruthy();
-//   })
-
-//   test("Removing Added Bid", async () => {
-//     await Bid.remove({_id: testBid._id});
-
-//     const found = await Bid.find({_id: testBid._id});
-
-//     expect(found).not.toBe(testBid);
-
-//   })
-// })
+})
