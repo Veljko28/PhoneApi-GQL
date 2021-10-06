@@ -2,6 +2,7 @@ import { v4 } from "uuid";
 import { Phone } from "../../models/Phone";
 
 interface AddPhoneModel {
+  Id?: String
   Name: String
   Image: String
   Description: String
@@ -27,7 +28,7 @@ export const resolvers = {
     addPhone: async (_: any, args: {model: AddPhoneModel}) => {
       const {model} = args;
       const fullModel = {
-        Id: v4(),
+        Id: model.Id !== null ? model.Id : v4(),
         Status: 0,
         DateCreated: Date.now(),
         ...model,
