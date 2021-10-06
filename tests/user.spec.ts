@@ -18,15 +18,34 @@ const loginMutation = `
 
 let deleteMutation = `
   mutation {
-    delete(id: "")
+    deleteUser(id: "")
   }`;
 
 let findUserQuery = `
   {
   getUser(id: ""){
-    UserName
+    EmailConfirmed
   }
 }`
+
+const updateUserMutation = `
+mutation($updateUserUser: updateUser) {
+  updateUser(user: $updateUserUser)
+}`
+
+let userModel = {
+      Id: "",
+      UserName: "integrated_test",
+      Email: "integrated_test@gmail.com",
+      Description: "",
+      PhoneNumber: null,
+      Phones_sold: null,
+      Rating: 0,
+      EmailConfirmed: true,
+      LoyalityPoints: null
+}
+
+let Id: string;
 
 beforeAll( async () => {
   await startServer();
@@ -60,15 +79,17 @@ describe("Testing User Methods", () => {
 
       const {accessToken, userId} = loginResponse.data.login;
 
+      Id = userId;
+
        deleteMutation = `
         mutation {
-          delete(id: "${userId}")
+          deleteUser(id: "${userId}")
         }`;
 
         findUserQuery = `
-        Query {
+        {
           getUser(id: "${userId}"){
-            UserName
+            EmailConfirmed
           }
         }
         `
@@ -76,17 +97,23 @@ describe("Testing User Methods", () => {
       expect(loginResponse.data.login).not.toBeNull();
   })
 
+  test("Update the added user", async () => {
+    const upd = await graphqlTestCall(updateUserMutation, {updateUserUser: {...userModel,Id } });
+
+    expect(upd).toEqual({data: { updateUser: true }});
+  })
+
   test("Find the added user", async () => {
     const addedUser = await graphqlTestCall(findUserQuery);
 
-    console.log(addedUser);
-    expect(addedUser).toBeTruthy();
+    expect(addedUser).toEqual({data: { getUser: { EmailConfirmed: true } }});
   })
+
 
   test("Delete the added user", async () => {
 
     const deleteResponse = await graphqlTestCall(deleteMutation);
 
-    expect(deleteResponse).toEqual({ data: {delete: true }});
+    expect(deleteResponse).toEqual({ data: {deleteUser: true }});
   })
 })
