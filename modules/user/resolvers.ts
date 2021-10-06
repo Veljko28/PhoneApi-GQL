@@ -5,6 +5,7 @@ import { CreateAccessToken } from '../../auth/CreateAccessToken';
 import { v4 } from 'uuid';
 
 interface RegisterForm {
+  Id: string,
   userName: string,
   email: string,
   password: string,
@@ -56,7 +57,7 @@ export const resolvers = {
       const hashedPassword = bcrypt.hashSync(registerForm.password, 10);
 
       const userSchema = {
-        Id: v4(),
+        Id: registerForm.Id !== null ? registerForm.Id : v4(),
         Email: registerForm.email,
         UserName: registerForm.userName,
         Password: hashedPassword,
