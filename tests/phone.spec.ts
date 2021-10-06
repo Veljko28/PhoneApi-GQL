@@ -7,8 +7,6 @@ mutation($addPhoneModel: AddPhoneModel) {
   addPhone(model: $addPhoneModel)
 }`;
 
-let phoneId: string;
-
 beforeAll( async () => {
   await startServer();
 })
@@ -21,6 +19,7 @@ describe("Testing Phones", () => {
     test("Adding a phone", async () => {
 
        const phoneModel = {
+        Id: '1',
         Name: "Testing phone",
         Description: "test desc",
         Image: "",
@@ -43,21 +42,19 @@ describe("Testing Phones", () => {
         }
       }
     `);
-    console.log(allPhones.data.getAllPhones);
-    const {phones} = allPhones.data.getAllPhones;
+    const phones = allPhones.data.getAllPhones;
 
     expect(phones.length).toBeGreaterThan(0);
 
-    phoneId = phones[0].Id;
 
     const phone = await graphqlTestCall(`
     {
-      getPhone(id: "${phoneId}"){
+      getPhone(id: "1"){
         Name
       }
     }`);
 
-    const {phoneObj} = phone.data.getPhone;
+    const phoneObj = phone.data.getPhone;
 
     expect(phoneObj.Name).toBeTruthy();
   })
@@ -66,7 +63,7 @@ describe("Testing Phones", () => {
   test("Deleting the added phone", async () => {
       const del = await graphqlTestCall(`
       mutation {
-        deletePhone(id: "${phoneId}")
+        deletePhone(id: "1")
       }`);
 
       expect(del).toEqual({data: { deletePhone: true }});
