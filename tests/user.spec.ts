@@ -16,14 +16,14 @@ const loginMutation = `
     }
 }`;
 
-let deleteMutation = `
+const deleteMutation = `
   mutation {
-    deleteUser(id: "")
+    deleteUser(id: "1")
   }`;
 
-let findUserQuery = `
+const findUserQuery = `
   {
-  getUser(id: ""){
+  getUser(id: "1"){
     EmailConfirmed
   }
 }`
@@ -34,7 +34,7 @@ mutation($updateUserUser: updateUser) {
 }`
 
 let userModel = {
-      Id: "",
+      Id: "1",
       UserName: "integrated_test",
       Email: "integrated_test@gmail.com",
       Description: "",
@@ -44,8 +44,6 @@ let userModel = {
       EmailConfirmed: true,
       LoyalityPoints: null
 }
-
-let Id: string;
 
 beforeAll( async () => {
   await startServer();
@@ -58,6 +56,7 @@ afterAll( async () => {
 describe("Testing User Methods", () => {
   test("Registering a user", async () => {
       const registerForm = {
+        Id: '1',
         userName: "integrated_test",
         email: "integrated_test@gmail.com",
         password: "int_testing123",
@@ -77,28 +76,11 @@ describe("Testing User Methods", () => {
 
       const loginResponse = await graphqlTestCall(loginMutation, {loginInfo: loginForm});
 
-      const {accessToken, userId} = loginResponse.data.login;
-
-      Id = userId;
-
-       deleteMutation = `
-        mutation {
-          deleteUser(id: "${userId}")
-        }`;
-
-        findUserQuery = `
-        {
-          getUser(id: "${userId}"){
-            EmailConfirmed
-          }
-        }
-        `
-
       expect(loginResponse.data.login).not.toBeNull();
   })
 
   test("Update the added user", async () => {
-    const upd = await graphqlTestCall(updateUserMutation, {updateUserUser: {...userModel,Id } });
+    const upd = await graphqlTestCall(updateUserMutation, {updateUserUser: {...userModel} });
 
     expect(upd).toEqual({data: { updateUser: true }});
   })
@@ -114,6 +96,6 @@ describe("Testing User Methods", () => {
 
     const deleteResponse = await graphqlTestCall(deleteMutation);
 
-    expect(deleteResponse).toEqual({ data: {deleteUser: true }});
+    expect(deleteResponse).toEqual({ data: { deleteUser: true }});
   })
 })
