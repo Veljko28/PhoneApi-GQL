@@ -1,0 +1,24 @@
+type Query {
+  getUserNotifications(UserId: String): [Notification]
+}
+
+type Mutation {
+  addNotification(model: inpNotification): Boolean
+  deleteNotification(id: String): Boolean
+}
+
+input inpNotification {
+  Id: String
+  Name: String
+  Type: String
+  UserId: String
+  Message: String
+}
+
+type Notification {
+  Id: String
+  Name: String
+  Type: String
+  UserId: String
+  Message: String
+}
