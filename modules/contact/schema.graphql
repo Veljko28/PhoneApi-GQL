@@ -1,0 +1,24 @@
+type Query {
+  getContacts: [Contact]
+}
+
+type Mutation {
+  addContact(model: inpContact): Boolean
+  deleteContact(id: String): Boolean
+}
+
+input inpContact {
+  Id: String
+  Name: String
+  Email: String
+  Subject: String
+  Message: String
+}
+
+type Contact {
+  Id: String
+  Name: String
+  Email: String
+  Subject: String
+  Message: String
+}
