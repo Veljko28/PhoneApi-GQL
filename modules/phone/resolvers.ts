@@ -28,10 +28,10 @@ export const resolvers = {
     addPhone: async (_: any, args: {model: AddPhoneModel}) => {
       const {model} = args;
       const fullModel = {
-        Id: model.Id !== null ? model.Id : v4(),
+        ...model,
+        Id: 'Id' in model ? model.Id : v4(),
         Status: 0,
         DateCreated: Date.now(),
-        ...model,
       }
       const phone = new Phone(fullModel);
        try {
