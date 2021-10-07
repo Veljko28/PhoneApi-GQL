@@ -15,6 +15,7 @@ interface RegisterForm {
 type userType = IUser;
 
 const yupSchema = yup.object().shape( {
+    Id: yup.string().nullable(true),
     email: yup.string().min(10).max(255).email(),
     userName: yup.string().min(5).max(100),
     password: yup.string().min(6).max(255),

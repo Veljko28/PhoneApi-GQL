@@ -16,6 +16,7 @@ type TokenResponse {
 }
 
 input RegisterForm {
+  Id: String
   userName: String!
   email: String!
   password: String!
