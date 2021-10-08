@@ -1,9 +1,11 @@
 create all the tests
 create all the models
 
-create phone reducer actions
-create phone gql schema 
-create phone tests
+integrate TypeGraphQL
+
+create phone reducer actions ✅
+create phone gql schema  ✅
+create phone tests ✅
 
 fix the rest of the tests with _id ✅ 
 
@@ -23,4 +25,16 @@ contact schema ✅
 notifcations tests ✅
 notifications resolvers ✅
 notifications schema ✅
+
+purchase tests ✅
+purchase resolvers ✅
+purcahse schema ✅
+
+review tests ✅
+review resolvers ✅
+review schema ✅
+
+wishList tests ✅
+wishList resolvers ✅
+wishList schema ✅
 
