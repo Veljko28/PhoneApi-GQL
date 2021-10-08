@@ -1,0 +1,28 @@
+type Query {
+  getUserReviews(UserId: String): [UserReview]
+  checkReviewed(BuyerId: String, PhoneId: String): Boolean
+}
+
+type Mutation {
+  addReview(model: inpUserReview): Boolean
+}
+
+input inpUserReview {
+  Id: String
+  Rating: Int
+  BuyerId: String
+  SellerId: String
+  PhoneId: String
+  DateCreated: Int
+  Message: String
+}
+
+type UserReview {
+  Id: String
+  Rating: Int
+  BuyerId: String
+  SellerId: String
+  PhoneId: String
+  DateCreated: Int
+  Message: String
+}
