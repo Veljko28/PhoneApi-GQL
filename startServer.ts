@@ -16,7 +16,7 @@ const startServer = async () => {
  await mongoose.connect(`mongodb://localhost:27017/${process.env.TEST_SERVER === 'true' ? 'phonesTest' : 'phoneDb'}`);
 
   
-  const server = new ApolloServer({schema: getSchema()});
+  const server = new ApolloServer({schema: getSchema(), context: ({res, req}) => ({res, req})});
   
   await server.start();
   
