@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
 import { CreateAccessToken } from '../../auth/CreateAccessToken';
 import { v4 } from 'uuid';
+import { MyContext } from '../../types/MyContext';
 
 interface RegisterForm {
   Id: string,
@@ -84,7 +85,7 @@ export const resolvers = {
       return true;
     },
     
-    login: async (_: any,args: {info: {email: string,password: string}}) => {
+    login: async (_: any,args: {info: {email: string,password: string}}, {req,res}: MyContext) => {
 
       try {
             await yupSchema.validate(args.info, {abortEarly: false});
@@ -105,9 +106,11 @@ export const resolvers = {
                 }
             })
 
+          // refresh token
+          res.cookie('rid', CreateAccessToken(user.id, "7d"), {httpOnly: true})
+
       return {
         accessToken: CreateAccessToken(user.id, '15m'),
-        userId: user.id
       };            
     },
 

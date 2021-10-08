@@ -12,7 +12,6 @@ type Mutation {
 
 type TokenResponse {
   accessToken: String
-  userId: String
 }
 
 input RegisterForm {
