@@ -1,0 +1,23 @@
+type Query {
+  getPhonesPurchasedByUser(BuyerId: String): [PhonePurchase]
+}
+
+type Mutation {
+  addPurchase(model: inpPhonePurchase): Boolean
+}
+
+input inpPhonePurchase {
+  Id: String
+  PhoneId: String
+  SellerId: String
+  BuyerId: String
+  PurchaseDate: Int
+}
+
+type PhonePurchase {
+  Id: String
+  PhoneId: String
+  SellerId: String
+  BuyerId: String
+  PurchaseDate: Int
+}
