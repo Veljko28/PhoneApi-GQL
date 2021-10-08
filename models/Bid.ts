@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 export interface IBid extends mongoose.Document {
+    Id?: String
     Name: String,
     Image: String,
     Description: String,
