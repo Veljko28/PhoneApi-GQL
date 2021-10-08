@@ -10,4 +10,17 @@ fix the rest of the tests with _id ✅
 set up jwt access tokens ✅
 user tests ✅ 
 user find by id fix ✅ 
-find phone by id fix ✅ 
+find phone by id fix ✅
+
+bid tests ✅
+bid resolvers ✅
+bid schema ✅
+
+contact support tests ✅
+contact resolvers ✅
+contact schema ✅
+
+notifcations tests ✅
+notifications resolvers ✅
+notifications schema ✅
+
