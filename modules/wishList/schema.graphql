@@ -1,0 +1,23 @@
+type Query {
+  getUserWishes(UserId: String): [WishList]
+  getTimesAddedToWishList(PhoneId: String): Int
+}
+
+type Mutation {
+  addToWishList(model: inpWishList): Boolean
+  deleteFromWishList(Id: String): Boolean
+}
+
+type WishList {
+  Id: String
+  UserId: String
+  PhoneId: String
+  Type: String
+}
+
+input inpWishList {
+  Id: String
+  UserId: String
+  PhoneId: String
+  Type: String
+}
