@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { AuthReq } from '../../auth/AuthReq';
 import { Bid, IBid } from '../../models/Bid';
 
 type id = {
@@ -19,7 +20,9 @@ export const resolvers = {
     }
   },
   Mutation: {
-    addBid: async (_: any, args: {model: IBid}) => {
+    addBid: 
+    // AuthReq(
+      async (_: any, args: {model: IBid}) => {
       const {model} = args;
       const added = new Bid({...model,
         Id: 'Id' in model ? model.Id : v4(),
@@ -34,9 +37,13 @@ export const resolvers = {
         console.log(err);
         return false;
       }
-    },
+    }
+    // )
+    ,
 
-    updateBid: async (_: any, args: {bid: updateBid}) => {
+    updateBid: 
+    // AuthReq(
+      async (_: any, args: {bid: updateBid}) => {
       const {bid} = args;
       
       await Bid.updateOne({id: bid.Id}, bid).catch(err => {
@@ -45,9 +52,13 @@ export const resolvers = {
       })
 
       return true;
-    },
+    }
+    // )
+    ,
 
-    deleteBid: async (_:any, args: {id: string}) => {
+    deleteBid: 
+    // AuthReq(
+      async (_:any, args: {id: string}) => {
         const {id} = args;
 
         try { 
@@ -57,6 +68,8 @@ export const resolvers = {
         catch {
           return false;
         }
-    },
+    }
+    // )
+    ,
   }
 } 

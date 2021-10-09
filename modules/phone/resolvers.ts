@@ -1,5 +1,6 @@
 import { v4 } from "uuid";
 import { Phone } from "../../models/Phone";
+import { AuthReq } from '../../auth/AuthReq';
 
 interface AddPhoneModel {
   Id?: String
@@ -25,7 +26,9 @@ export const resolvers = {
     }
   },
   Mutation: {
-    addPhone: async (_: any, args: {model: AddPhoneModel}) => {
+    addPhone: 
+    // AuthReq(
+      async (_: any, args: {model: AddPhoneModel}) => {
       const {model} = args;
       const fullModel = {
         ...model,
@@ -39,8 +42,12 @@ export const resolvers = {
         return true;
       }
       catch(err) {return false}
-    },
-    deletePhone: async (_:any, args: {id: string}) => {
+    }
+    // )
+    ,
+    deletePhone: 
+    // AuthReq(
+      async (_:any, args: {id: string}) => {
        const {id} = args;
 
         try { 
@@ -51,5 +58,6 @@ export const resolvers = {
           return false;
         }
     }
+    // )
   }
 }
