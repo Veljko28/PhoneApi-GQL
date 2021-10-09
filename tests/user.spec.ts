@@ -1,7 +1,6 @@
 import { graphqlTestCall } from "./assets/graphqlTestCall";
-import { User } from "../models/User";
 import startServer from '../startServer';
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 
 const registerMutation = `
   mutation($registerRegisterForm: RegisterForm!){

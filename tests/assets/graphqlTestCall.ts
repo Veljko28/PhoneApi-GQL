@@ -7,7 +7,8 @@ const schema = getSchema();
 export const graphqlTestCall = async (
   query: any,
   variables?: any,
-  userId?: number | string
+  userId?: number | string,
+  token?: string
 ) => {
   return graphql(
     schema,
@@ -21,6 +22,9 @@ export const graphqlTestCall = async (
       },
       res: {
         clearCookie: () => {}
+      },
+      Headers: {
+        "Authorization":  `bearer ${token}`
       }
     },
     variables
