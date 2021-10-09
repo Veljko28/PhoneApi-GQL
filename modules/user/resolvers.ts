@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { CreateAccessToken } from '../../auth/CreateAccessToken';
 import { v4 } from 'uuid';
 import { MyContext } from '../../types/MyContext';
+import { AuthReq } from '../../auth/AuthReq';
 
 interface RegisterForm {
   Id: string,
@@ -25,7 +26,9 @@ const yupSchema = yup.object().shape( {
 
 export const resolvers = {
   Query: {
-    getUser: async (_: any, args: {id: string}) => {
+    getUser: 
+    // AuthReq(
+      async (_: any, args: {id: string}) => {
       const {id} = args;
 
       const user: any = await User.findOne({Id: id});
@@ -37,12 +40,17 @@ export const resolvers = {
         Rating: user.Rating,
         EmailConfirmed: user.EmailConfirmed
       };
-    },
-    getAllUsers: async () => {
+    }
+    // )
+    ,
+    getAllUsers: 
+    // AuthReq(
+      async () => {
       const allUsers = await User.find();
 
       return allUsers;
     }
+    // )
   },
   Mutation: {
     register: async (_: any, args: {registerForm: RegisterForm}) => {
@@ -59,7 +67,7 @@ export const resolvers = {
       const hashedPassword = bcrypt.hashSync(registerForm.password, 10);
 
       const userSchema = {
-        Id: registerForm.Id !== null ? registerForm.Id : v4(),
+        Id: "Id" in registerForm ? registerForm.Id : v4(),
         Email: registerForm.email,
         UserName: registerForm.userName,
         Password: hashedPassword,
@@ -97,7 +105,6 @@ export const resolvers = {
           const {email, password} = args.info;
 
           const user = await User.findOne({email});
-
          if (user === null) return null;
 
           bcrypt.compare(password, (user as any).password , (err) => {
@@ -106,15 +113,18 @@ export const resolvers = {
                 }
             })
 
+
           // refresh token
-          res.cookie('rid', CreateAccessToken(user.id, "7d"), {httpOnly: true})
+          // res.cookie('rid', CreateAccessToken(user.id, "7d"), {httpOnly: true})
 
       return {
         accessToken: CreateAccessToken(user.id, '15m'),
       };            
     },
 
-    deleteUser: async (_:any, args: {id: string}) => {
+    deleteUser: 
+    // AuthReq(
+      async (_:any, args: {id: string}) => {
         const {id} = args;
 
         try { 
@@ -124,10 +134,14 @@ export const resolvers = {
         catch {
           return false;
         }
-    },
+    }
+    // )
+    ,
 
 
-    updateUser: async (_: any, args: {user: userType}) => {
+    updateUser:
+    //  AuthReq(
+       async (_: any, args: {user: userType}) => {
       const {user} = args;
       
       await User.updateOne({id: user.Id}, user).catch(err => {
@@ -136,7 +150,8 @@ export const resolvers = {
       })
 
       return true;
-    } 
+    }
+    // )
 
   }
 }
