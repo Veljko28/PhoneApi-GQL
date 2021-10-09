@@ -38,3 +38,7 @@ wishList tests ✅
 wishList resolvers ✅
 wishList schema ✅
 
+auth functions ✅
+adding authentication to routes ✅
+auth in tests  
+
