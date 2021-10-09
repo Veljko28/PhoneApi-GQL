@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import { ContactSupport, IContactSupport } from '../../models/ContactSupport';
+import { AuthReq } from '../../auth/AuthReq';
 
 export const resolvers = {
   Query: {
@@ -20,7 +21,9 @@ export const resolvers = {
         return false;
       }
     },
-    deleteContact: async (_:any, args: {id: string}) => {
+    deleteContact: 
+    // AuthReq(
+      async (_:any, args: {id: string}) => {
        const {id} = args;
 
         try { 
@@ -31,5 +34,6 @@ export const resolvers = {
           return false;
         }
     }
+    // )
   }
 }
