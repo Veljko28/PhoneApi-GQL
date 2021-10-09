@@ -1,5 +1,6 @@
 import { v4 } from "uuid";
 import { IUserReview, UserReview } from "../../models/UserReview"
+import { AuthReq } from "../../auth/AuthReq";  
 
 export const resolvers = {
   Query: {
@@ -15,7 +16,9 @@ export const resolvers = {
     }
   },
   Mutation: {
-    addReview: async (_: any, args: {model: IUserReview}) => {
+    addReview: 
+    // AuthReq(
+      async (_: any, args: {model: IUserReview}) => {
       const { model } = args;
       const review = new UserReview({...model,
       Id: "Id" in model ? model.Id : v4(),
@@ -29,7 +32,9 @@ export const resolvers = {
         console.log(err);
         return false;
       }
-    },
+    }
+    // )
+    ,
 
   }
 }

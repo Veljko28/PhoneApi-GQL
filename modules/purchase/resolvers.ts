@@ -1,14 +1,20 @@
 import { v4 } from "uuid";
 import { IPhonePurchase, PhonePurchase } from "../../models/PhonePurchase"
+import { AuthReq } from "../../auth/AuthReq";
 
 export const resolvers = {
   Query: {
-    getPhonesPurchasedByUser: async (_: any, args: {BuyerId: String}) => {
+    getPhonesPurchasedByUser: 
+    // AuthReq(
+      async (_: any, args: {BuyerId: String}) => {
       return await PhonePurchase.find(args);
-    } 
+    }
+    // ) 
   },
   Mutation: {
-    addPurchase: async (_: any, args: {model: IPhonePurchase}) => {
+    addPurchase: 
+    // AuthReq(
+      async (_: any, args: {model: IPhonePurchase}) => {
       const {model} = args;
       const purchase = new PhonePurchase({...model,
       Id: "Id" in model ? model.Id : v4(),
@@ -25,5 +31,6 @@ export const resolvers = {
       }
 
     }
+    // )
   }
 }
